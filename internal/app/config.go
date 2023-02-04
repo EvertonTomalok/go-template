@@ -3,7 +3,10 @@ package app
 import (
 	"context"
 	"fmt"
-	"log"
+
+	log "github.com/sirupsen/logrus"
+
+	"github.com/EvertonTomalok/go-template/internal/infra/database/postgres"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
@@ -18,7 +21,7 @@ var DefaultDatabase string = fmt.Sprintf(
 	DefaultPostgresHostTemplate,
 	LocalHost,
 	DefaultDatabasePort,
-	"database", // change for the desired database name
+	"db", // change for the desired database name
 )
 
 type Config struct {
@@ -27,6 +30,8 @@ type Config struct {
 		Host     string
 		Database struct {
 			Host               string
+			Port               string
+			Name               string
 			ConnMaxLifetime    int
 			MaxOpenConnections int
 			MaxIdleConnections int
@@ -44,6 +49,8 @@ func Configure(ctx context.Context) Config {
 	viper.SetDefault("App.Host", LocalHost)
 	viper.SetDefault("App.Port", DefaultPort)
 	viper.SetDefault("App.Database.Host", DefaultDatabase)
+	viper.SetDefault("App.Database.Port", "5432")
+	viper.SetDefault("App.Database.Name", "db")
 	viper.SetDefault("App.Database.ConnMaxLifetime", 5000)
 	viper.SetDefault("App.Database.MaxOpenConnections", 100)
 	viper.SetDefault("App.Database.MaxIdleConnections", 50)
@@ -60,4 +67,21 @@ func Configure(ctx context.Context) Config {
 	log.Print("configuration loaded")
 
 	return cfg
+}
+
+func InitDB(ctx context.Context, cfg Config) {
+	database := postgres.Init(ctx, cfg.App.Database.Host, cfg.App.Database.Name)
+
+	if err := postgres.Check(database); err != nil {
+		log.Fatal("Database not initilialized.")
+	}
+
+	// adapter := postgres.New(database)
+
+	maxDelimiter := 12
+	if len(cfg.App.Database.Host) < 12 {
+		maxDelimiter = 5
+	}
+
+	log.Infof("Database connection is ready at %s***:%s/%s", cfg.App.Database.Host[0:maxDelimiter], cfg.App.Database.Port, cfg.App.Database.Name)
 }

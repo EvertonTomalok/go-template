@@ -1,0 +1,2 @@
+DROP INDEX IF EXISTS idx_cpf;
+DROP TABLE IF EXISTS people;

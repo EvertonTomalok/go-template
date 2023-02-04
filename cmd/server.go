@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/EvertonTomalok/go-template/internal/app"
 	"github.com/spf13/cobra"
 )
@@ -14,9 +12,7 @@ var serverCmd = &cobra.Command{
 		ctx := cmd.Context()
 
 		config := app.Configure(ctx)
-
-		fmt.Printf("%+v\n", config)
-
+		app.InitDB(ctx, config)
 	},
 }
 
