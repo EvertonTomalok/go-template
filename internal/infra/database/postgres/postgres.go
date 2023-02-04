@@ -14,7 +14,8 @@ import (
 )
 
 var (
-	Conn *sql.DB
+	Conn    *sql.DB
+	Started bool
 )
 
 func Init(ctx context.Context, host string, name string) *sql.DB {
@@ -107,5 +108,7 @@ func Ready(ctx context.Context) error {
 		log.WithError(err).Error("Error to ping db.")
 		return err
 	}
+
+	Started = true
 	return nil
 }

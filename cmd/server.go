@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/EvertonTomalok/go-template/internal/app"
+	"github.com/EvertonTomalok/go-template/internal/ui/rest"
 	"github.com/spf13/cobra"
 )
 
@@ -10,11 +11,12 @@ var serverCmd = &cobra.Command{
 	Short: "Run http server",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := cmd.Context()
+		defer app.CloseConnections(ctx)
 
 		config := app.Configure(ctx)
-		app.InitDB(ctx, config)
 
-		defer app.CloseConnections(ctx)
+		app.InitDB(ctx, config)
+		rest.RunServer(ctx, config)
 	},
 }
 

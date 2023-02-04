@@ -1,0 +1,25 @@
+definitions:
+  dto.Person:
+    properties:
+      cpf:
+        type: string
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /person/{person_id}:
+    get:
+      description: Get Person
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Person'
+      summary: Get Person
+      tags:
+      - People
+swagger: "2.0"

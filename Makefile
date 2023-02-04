@@ -10,5 +10,5 @@ build:
 	go build -o exe main.go
 
 .PHONY: server
-server: envvars build
+server: envvars swag build
 	./exe server

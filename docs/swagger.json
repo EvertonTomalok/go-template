@@ -1,0 +1,41 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/person/{person_id}": {
+            "get": {
+                "description": "Get Person",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "People"
+                ],
+                "summary": "Get Person",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Person"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.Person": {
+            "type": "object",
+            "properties": {
+                "cpf": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
