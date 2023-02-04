@@ -31,6 +31,10 @@ type Config struct {
 			MaxOpenConnections int
 			MaxIdleConnections int
 		}
+		Kafka struct {
+			Host string
+			Port int
+		}
 	}
 }
 
@@ -43,6 +47,8 @@ func Configure(ctx context.Context) Config {
 	viper.SetDefault("App.Database.ConnMaxLifetime", 5000)
 	viper.SetDefault("App.Database.MaxOpenConnections", 100)
 	viper.SetDefault("App.Database.MaxIdleConnections", 50)
+	viper.SetDefault("App.Kafka.Host", "0.0.0.0")
+	viper.SetDefault("App.Kafka.Port", 29092)
 	viper.AutomaticEnv()
 
 	var cfg Config

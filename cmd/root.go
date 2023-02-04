@@ -21,12 +21,12 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
 	_ = viper.BindEnv("App.Host", "APP_HOST")
 	_ = viper.BindEnv("App.Port", "APP_PORT")
 	_ = viper.BindEnv("App.Database.Host", "APP_DATABASE_HOST")
 	_ = viper.BindEnv("App.Database.ConnMaxLifetime", "APP_DATABASE_CONN_MAX_LIFE_TIME")
 	_ = viper.BindEnv("App.Database.MaxOpenConnections", "APP_DATABASE_MAX_OPEN_CONNECTIONS")
 	_ = viper.BindEnv("App.Database.MaxIdleConnections", "APP_DATABASE_MAX_IDLE_CONNECTIONS")
+	_ = viper.BindEnv("App.Kafka.Host", "APP_KAFKA_HOST")
+	_ = viper.BindEnv("App.Kafka.Port", "APP_KAFKA_PORT")
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var runCmd = &cobra.Command{
+var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Run http server",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -21,5 +21,7 @@ var runCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(runCmd)
+	serverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	rootCmd.AddCommand(serverCmd)
 }
