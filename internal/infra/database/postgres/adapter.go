@@ -6,10 +6,14 @@ import (
 
 func New(dataBase *sql.DB) *Adapter {
 	return &Adapter{
-		Db: dataBase,
+		Db: Conn,
 	}
 }
 
 type Adapter struct {
 	Db *sql.DB
+}
+
+func (a *Adapter) GetPerson() {
+
 }

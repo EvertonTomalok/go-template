@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 
@@ -51,7 +52,7 @@ func Configure(ctx context.Context) Config {
 	viper.SetDefault("App.Database.Host", DefaultDatabase)
 	viper.SetDefault("App.Database.Port", "5432")
 	viper.SetDefault("App.Database.Name", "db")
-	viper.SetDefault("App.Database.ConnMaxLifetime", 5000)
+	viper.SetDefault("App.Database.ConnMaxLifetime", 15*time.Minute)
 	viper.SetDefault("App.Database.MaxOpenConnections", 100)
 	viper.SetDefault("App.Database.MaxIdleConnections", 50)
 	viper.SetDefault("App.Kafka.Host", "0.0.0.0")
@@ -70,13 +71,13 @@ func Configure(ctx context.Context) Config {
 }
 
 func InitDB(ctx context.Context, cfg Config) {
-	database := postgres.Init(ctx, cfg.App.Database.Host, cfg.App.Database.Name)
+	postgres.Conn = postgres.Init(ctx, cfg.App.Database.Host, cfg.App.Database.Name)
 
-	if err := postgres.Check(database); err != nil {
+	if err := postgres.Ready(ctx); err != nil {
 		log.Fatal("Database not initilialized.")
 	}
 
-	// adapter := postgres.New(database)
+	// adapter := postgres.New(postgres.Conn)
 
 	maxDelimiter := 12
 	if len(cfg.App.Database.Host) < 12 {
@@ -84,4 +85,8 @@ func InitDB(ctx context.Context, cfg Config) {
 	}
 
 	log.Infof("Database connection is ready at %s***:%s/%s", cfg.App.Database.Host[0:maxDelimiter], cfg.App.Database.Port, cfg.App.Database.Name)
+}
+
+func CloseConnections(ctx context.Context) {
+	postgres.Close(ctx)
 }

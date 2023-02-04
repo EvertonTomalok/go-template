@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/joho/godotenv v1.5.0
+	github.com/klassmann/cpfcnpj v0.0.0-20200907140233-a595c5fd8de1
 	github.com/newrelic/go-agent/v3/integrations/nrpq v1.1.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.6.1

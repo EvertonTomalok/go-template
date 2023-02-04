@@ -13,6 +13,8 @@ var serverCmd = &cobra.Command{
 
 		config := app.Configure(ctx)
 		app.InitDB(ctx, config)
+
+		defer app.CloseConnections(ctx)
 	},
 }
 
