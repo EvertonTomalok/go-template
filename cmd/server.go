@@ -15,7 +15,8 @@ var serverCmd = &cobra.Command{
 
 		config := app.Configure(ctx)
 
-		app.InitDB(ctx, config)
+		app.InitDB(ctx, config, true)
+		app.InitMongoDB(ctx, config, true)
 		rest.RunServer(ctx, config)
 	},
 }

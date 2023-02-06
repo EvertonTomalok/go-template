@@ -31,4 +31,5 @@ func init() {
 	_ = viper.BindEnv("App.Database.MaxIdleConnections", "APP_DATABASE_MAX_IDLE_CONNECTIONS")
 	_ = viper.BindEnv("App.Kafka.Host", "APP_KAFKA_HOST")
 	_ = viper.BindEnv("App.Kafka.Port", "APP_KAFKA_PORT")
+	_ = viper.BindEnv("App.MongoDB.Uri", "APP_MONGODB_URI")
 }
